@@ -41,12 +41,16 @@ export const absenceService = {
 
   async getAbsences(filter: AbsenceFilter = {}): Promise<Absence[]> {
     try {
-      // Si nous n'avons pas encore récupéré les absences, faisons-le
-      if (this._cachedAbsences.length === 0) {
-        console.log("Récupération de toutes les absences depuis l'API")
-        const response = await apiClient.get("/api/teacher/absences")
-        this._cachedAbsences = response.data
+      // Toujours récupérer les absences depuis l'API pour éviter les problèmes de cache
+      console.log("Récupération des absences depuis l'API")
+      const response = await apiClient.get("/api/teacher/absences")
+
+      if (!response || !response.data || !Array.isArray(response.data)) {
+        console.error("Réponse API invalide:", response)
+        return []
       }
+
+      this._cachedAbsences = response.data
 
       // Filtrer les absences côté client
       let filteredAbsences = [...this._cachedAbsences]
@@ -82,21 +86,21 @@ export const absenceService = {
       return filteredAbsences
     } catch (error) {
       console.error("Erreur lors de la récupération des absences:", error)
-      throw error
+      return [] // Retourner un tableau vide en cas d'erreur au lieu de propager l'erreur
     }
   },
 
-  async getAbsenceById(id: number): Promise<Absence> {
+  async getAbsenceById(id: number): Promise<Absence | null> {
     try {
       const response = await apiClient.get(`/api/teacher/absences/${id}`)
       return response.data
     } catch (error) {
       console.error(`Erreur lors de la récupération de l'absence ${id}:`, error)
-      throw error
+      return null
     }
   },
 
-  async createAbsence(absence: AbsenceCreate): Promise<Absence> {
+  async createAbsence(absence: AbsenceCreate): Promise<Absence | null> {
     try {
       // Formater la date au format yyyy-MM-dd pour DateOnly
       const date = new Date(absence.absenceDate)
@@ -109,16 +113,18 @@ export const absenceService = {
       const response = await apiClient.post("/api/teacher/absences", formattedAbsence)
 
       // Mettre à jour le cache
-      this._cachedAbsences.push(response.data)
-
-      return response.data
+      if (response && response.data) {
+        this._cachedAbsences.push(response.data)
+        return response.data
+      }
+      return null
     } catch (error) {
       console.error("Erreur lors de la création de l'absence:", error)
-      throw error
+      return null
     }
   },
 
-  async updateAbsence(id: number, absence: AbsenceUpdate): Promise<void> {
+  async updateAbsence(id: number, absence: AbsenceUpdate): Promise<boolean> {
     try {
       // Formater la date au format yyyy-MM-dd pour DateOnly
       const date = new Date(absence.absenceDate)
@@ -137,21 +143,23 @@ export const absenceService = {
           ...formattedAbsence,
         }
       }
+      return true
     } catch (error) {
       console.error(`Erreur lors de la mise à jour de l'absence ${id}:`, error)
-      throw error
+      return false
     }
   },
 
-  async deleteAbsence(id: number): Promise<void> {
+  async deleteAbsence(id: number): Promise<boolean> {
     try {
       await apiClient.delete(`/api/teacher/absences/${id}`)
 
       // Mettre à jour le cache
       this._cachedAbsences = this._cachedAbsences.filter((a) => a.id !== id)
+      return true
     } catch (error) {
       console.error(`Erreur lors de la suppression de l'absence ${id}:`, error)
-      throw error
+      return false
     }
   },
 

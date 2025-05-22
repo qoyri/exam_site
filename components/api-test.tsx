@@ -220,7 +220,7 @@ export function ApiTest() {
               {isLoading ? "Génération en cours..." : "Générer le script SQL"}
             </Button>
 
-            <Alert variant="destructive">
+            <Alert variant="warning">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Important</AlertTitle>
               <AlertDescription>

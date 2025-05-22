@@ -11,7 +11,7 @@ import { fr } from "date-fns/locale"
 import { CalendarIcon, Clock, Plus, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { roomService } from "@/lib/room-service"
-import { toast } from "@/hooks/use-toast"
+import { toast } from "@/components/ui/use-toast"
 import {
   Dialog,
   DialogContent,

@@ -68,62 +68,62 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold">Portail Professeurs</span>
-          </Link>
-        </div>
-        <div className="flex flex-1 items-center justify-end space-x-2">
-          <nav className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
-              <span className="sr-only">Notifications</span>
-            </Button>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-14 items-center">
+          <div className="mr-4 flex">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="font-bold">Portail Professeurs</span>
+            </Link>
+          </div>
+          <div className="flex flex-1 items-center justify-end space-x-2">
+            <nav className="flex items-center space-x-2">
+              <Button variant="ghost" size="icon">
+                <Bell className="h-5 w-5" />
+                <span className="sr-only">Notifications</span>
+              </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-full">
-                  {loading ? (
-                    <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
-                  ) : (
-                    <Avatar className="h-8 w-8">
-                      {profileImage ? (
-                        <AvatarImage src={profileImage || "/placeholder.svg"} alt={user?.username || "Avatar"} />
-                      ) : (
-                        <User className="h-5 w-5" />
-                      )}
-                      <AvatarFallback>{user?.username?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
-                    </Avatar>
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>{user ? user.username : "Mon compte"}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/profile">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profil</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/parametres">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Paramètres</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Déconnexion</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </nav>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-full">
+                    {loading ? (
+                        <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+                    ) : (
+                        <Avatar className="h-8 w-8">
+                          {profileImage ? (
+                              <AvatarImage src={profileImage || "/placeholder.svg"} alt={user?.username || "Avatar"} />
+                          ) : (
+                              <User className="h-5 w-5" />
+                          )}
+                          <AvatarFallback>{user?.username?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
+                        </Avatar>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>{user ? user.username : "Mon compte"}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profil</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/parametres">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Paramètres</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Déconnexion</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </nav>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
   )
 }

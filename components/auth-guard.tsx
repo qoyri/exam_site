@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { authService } from "@/lib/auth-service"
+import { authService } from "@/lib/auth-service.tsx"
 
 interface AuthGuardProps {
   children: React.ReactNode

@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/components/ui/use-toast"
 import { absenceService } from "@/lib/absence-service"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
@@ -191,10 +191,10 @@ export default function AbsenceDetailsPage({ params }: AbsenceDetailsProps) {
         <Card>
           <CardHeader>
             <CardTitle>Absence non trouvée</CardTitle>
-            <CardDescription>L&#39;absence demandée n&#39;existe pas</CardDescription>
+            <CardDescription>L'absence demandée n'existe pas</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>L&#39;absence avec l&#39;identifiant {id} n&#39;a pas été trouvée.</p>
+            <p>L'absence avec l'identifiant {id} n'a pas été trouvée.</p>
           </CardContent>
           <CardFooter>
             <Button onClick={() => router.push("/absences")}>Retour à la liste</Button>
@@ -207,7 +207,7 @@ export default function AbsenceDetailsPage({ params }: AbsenceDetailsProps) {
   return (
     <div className="container mx-auto py-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold tracking-tight">Détails de l&#39;absence</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Détails de l'absence</h2>
         <Button variant="outline" onClick={() => router.push("/absences")}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           Retour
@@ -221,7 +221,7 @@ export default function AbsenceDetailsPage({ params }: AbsenceDetailsProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="date">Date de l&#39;absence</Label>
+            <Label htmlFor="date">Date de l'absence</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button

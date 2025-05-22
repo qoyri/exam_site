@@ -132,7 +132,7 @@ export default function ClassesPage() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <CalendarDays className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Aujourd&#39;hui</span>
+                    <span className="text-sm text-muted-foreground">Aujourd'hui</span>
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">

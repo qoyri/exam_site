@@ -226,138 +226,138 @@ export default function ConversationPage() {
 
   if (loading) {
     return (
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-900"></div>
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-900"></div>
+      </div>
     )
   }
 
   if (error && error.includes("authentification")) {
     return (
-        <div className="container mx-auto p-4">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-            <Button className="ml-4" onClick={() => router.push("/login")}>
-              Se connecter
-            </Button>
-          </div>
+      <div className="container mx-auto p-4">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+          <Button className="ml-4" onClick={() => router.push("/login")}>
+            Se connecter
+          </Button>
         </div>
+      </div>
     )
   }
 
   return (
-      <div className="container mx-auto p-4 flex flex-col h-[calc(100vh-64px)]">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center">
-            <Button variant="ghost" className="mr-2" onClick={() => router.push("/messages")}>
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <Avatar className="h-8 w-8 mr-2">
-              <AvatarFallback className="bg-blue-900 text-white">{getInitials(contactName)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="font-semibold">{contactName || `Contact #${contactId}`}</div>
-              {contactRole && <div className="text-xs text-gray-500">{translateRole(contactRole)}</div>}
-            </div>
+    <div className="container mx-auto p-4 flex flex-col h-[calc(100vh-64px)]">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          <Button variant="ghost" className="mr-2" onClick={() => router.push("/messages")}>
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <Avatar className="h-8 w-8 mr-2">
+            <AvatarFallback className="bg-blue-900 text-white">{getInitials(contactName)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="font-semibold">{contactName || `Contact #${contactId}`}</div>
+            {contactRole && <div className="text-xs text-gray-500">{translateRole(contactRole)}</div>}
           </div>
-          <Badge
-              variant={connected ? "secondary" : "destructive"}
-              className={connected ? "bg-green-500 hover:bg-green-600" : ""}
-          >
-            {connected ? "Connecté" : "Déconnecté"}
-          </Badge>
         </div>
-
-        {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
-
-        <Card className="flex-grow overflow-hidden bg-gray-900">
-          <CardContent className="p-4 h-full flex flex-col">
-            <div className="flex-grow overflow-y-auto p-2">
-              {messages.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500">Aucun message</p>
-                    <p className="text-gray-400 text-sm mt-2">
-                      {currentUserId ? "Commencez à discuter avec ce contact" : "Chargement de votre identifiant..."}
-                    </p>
-                  </div>
-              ) : (
-                  <div className="space-y-4">
-                    {messages.map((message) => {
-                      // Vérifier si l'utilisateur actuel est l'expéditeur
-                      const isCurrentUser = message.senderId === currentUserId
-
-                      return (
-                          <div key={message.id} className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}>
-                            {!isCurrentUser && (
-                                <Avatar className="h-8 w-8 mr-2 self-end mb-1">
-                                  <AvatarFallback className="bg-gray-400 text-white">
-                                    {getInitials(message.senderName)}
-                                  </AvatarFallback>
-                                </Avatar>
-                            )}
-                            <div
-                                style={{
-                                  backgroundColor: isCurrentUser ? "#1e40af" : "#e5e7eb",
-                                  color: isCurrentUser ? "white" : "black",
-                                  borderTopRightRadius: isCurrentUser ? "0" : "0.5rem",
-                                  borderTopLeftRadius: isCurrentUser ? "0.5rem" : "0",
-                                  borderBottomRightRadius: "0.5rem",
-                                  borderBottomLeftRadius: "0.5rem",
-                                  padding: "0.75rem",
-                                  maxWidth: "70%",
-                                }}
-                            >
-                              <div className="whitespace-pre-wrap break-words">{message.content}</div>
-                              <div
-                                  className={`flex items-center ${isCurrentUser ? "justify-end" : "justify-start"} mt-1 space-x-1`}
-                              >
-                                <div
-                                    style={{ fontSize: "0.75rem", opacity: 0.7, color: isCurrentUser ? "#e5e7eb" : "#4b5563" }}
-                                >
-                                  {format(new Date(message.sentAt), "HH:mm")}
-                                </div>
-                                {isCurrentUser && getStatusIcon(message)}
-                              </div>
-                            </div>
-                            {isCurrentUser && (
-                                <Avatar className="h-8 w-8 ml-2 self-end mb-1">
-                                  <AvatarFallback style={{ backgroundColor: "#1e40af", color: "white" }}>
-                                    {getInitials(message.senderName)}
-                                  </AvatarFallback>
-                                </Avatar>
-                            )}
-                          </div>
-                      )
-                    })}
-                    <div ref={messagesEndRef} />
-                  </div>
-              )}
-            </div>
-
-            <form onSubmit={handleSendMessage} className="mt-4 flex">
-              <Input
-                  type="text"
-                  placeholder="Écrivez votre message..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  className="flex-grow"
-                  disabled={sending || !connected || currentUserId === null}
-              />
-              <Button
-                  type="submit"
-                  style={{ backgroundColor: "#1e40af", marginLeft: "0.5rem" }}
-                  className="hover:bg-blue-800"
-                  disabled={sending || !connected || !newMessage.trim() || currentUserId === null}
-              >
-                {sending ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
-                ) : (
-                    <Send className="h-4 w-4" />
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+        <Badge
+          variant={connected ? "secondary" : "destructive"}
+          className={connected ? "bg-green-500 hover:bg-green-600" : ""}
+        >
+          {connected ? "Connecté" : "Déconnecté"}
+        </Badge>
       </div>
+
+      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
+
+      <Card className="flex-grow overflow-hidden bg-gray-900">
+        <CardContent className="p-4 h-full flex flex-col">
+          <div className="flex-grow overflow-y-auto p-2">
+            {messages.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-500">Aucun message</p>
+                <p className="text-gray-400 text-sm mt-2">
+                  {currentUserId ? "Commencez à discuter avec ce contact" : "Chargement de votre identifiant..."}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {messages.map((message) => {
+                  // Vérifier si l'utilisateur actuel est l'expéditeur
+                  const isCurrentUser = message.senderId === currentUserId
+
+                  return (
+                    <div key={message.id} className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}>
+                      {!isCurrentUser && (
+                        <Avatar className="h-8 w-8 mr-2 self-end mb-1">
+                          <AvatarFallback className="bg-gray-400 text-white">
+                            {getInitials(message.senderName)}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div
+                        style={{
+                          backgroundColor: isCurrentUser ? "#1e40af" : "#e5e7eb",
+                          color: isCurrentUser ? "white" : "black",
+                          borderTopRightRadius: isCurrentUser ? "0" : "0.5rem",
+                          borderTopLeftRadius: isCurrentUser ? "0.5rem" : "0",
+                          borderBottomRightRadius: "0.5rem",
+                          borderBottomLeftRadius: "0.5rem",
+                          padding: "0.75rem",
+                          maxWidth: "70%",
+                        }}
+                      >
+                        <div className="whitespace-pre-wrap break-words">{message.content}</div>
+                        <div
+                          className={`flex items-center ${isCurrentUser ? "justify-end" : "justify-start"} mt-1 space-x-1`}
+                        >
+                          <div
+                            style={{ fontSize: "0.75rem", opacity: 0.7, color: isCurrentUser ? "#e5e7eb" : "#4b5563" }}
+                          >
+                            {format(new Date(message.sentAt), "HH:mm")}
+                          </div>
+                          {isCurrentUser && getStatusIcon(message)}
+                        </div>
+                      </div>
+                      {isCurrentUser && (
+                        <Avatar className="h-8 w-8 ml-2 self-end mb-1">
+                          <AvatarFallback style={{ backgroundColor: "#1e40af", color: "white" }}>
+                            {getInitials(message.senderName)}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
+                  )
+                })}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={handleSendMessage} className="mt-4 flex">
+            <Input
+              type="text"
+              placeholder="Écrivez votre message..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-grow"
+              disabled={sending || !connected || currentUserId === null}
+            />
+            <Button
+              type="submit"
+              style={{ backgroundColor: "#1e40af", marginLeft: "0.5rem" }}
+              className="hover:bg-blue-800"
+              disabled={sending || !connected || !newMessage.trim() || currentUserId === null}
+            >
+              {sending ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

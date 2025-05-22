@@ -32,7 +32,7 @@ export default function Error({
       <Card>
         <CardHeader>
           <CardTitle>Une erreur est survenue</CardTitle>
-          <CardDescription>Nous n&#39;avons pas pu charger les détails de cette absence.</CardDescription>
+          <CardDescription>Nous n'avons pas pu charger les détails de cette absence.</CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-red-500">{error.message || "Une erreur inattendue s'est produite."}</p>

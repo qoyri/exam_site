@@ -46,7 +46,7 @@ export default function Home() {
 
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="overview">Vue d&#39;ensemble</TabsTrigger>
+            <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
             <TabsTrigger value="absences">Absences</TabsTrigger>
             <TabsTrigger value="reports">Rapports</TabsTrigger>
           </TabsList>
@@ -136,7 +136,7 @@ export default function Home() {
                   <Button variant="outline" asChild>
                     <Link href="/rapports">
                       <BarChart3 className="mr-2 h-4 w-4" />
-                      Rapport d&#39;absences
+                      Rapport d'absences
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>

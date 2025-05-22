@@ -123,7 +123,7 @@ export default function MessagesPage() {
               {conversations.length === 0 ? (
                 <div className="text-center py-8">
                   <MessageSquare className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-500 mb-4">Vous n&#39;avez pas encore de conversations</p>
+                  <p className="text-gray-500 mb-4">Vous n'avez pas encore de conversations</p>
                   <Button onClick={handleNewConversation} className="bg-blue-900 hover:bg-blue-800">
                     Démarrer une conversation
                   </Button>
@@ -179,7 +179,7 @@ export default function MessagesPage() {
               {conversations.filter((c) => c.unreadCount > 0).length === 0 ? (
                 <div className="text-center py-8">
                   <MessageSquare className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-500">Vous n&#39;avez pas de messages non lus</p>
+                  <p className="text-gray-500">Vous n'avez pas de messages non lus</p>
                 </div>
               ) : (
                 <div className="space-y-2">

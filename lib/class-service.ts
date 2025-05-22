@@ -15,7 +15,8 @@ export interface Student {
   classId: number
   firstName: string
   lastName: string
-  birthdate?: string
+  birthdate?: string // Changé pour accepter le format DateTime
+  userId?: number
 }
 
 // Cache pour stocker les classes récupérées

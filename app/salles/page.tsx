@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { MapPin, Users, Plus } from "lucide-react"
 import { roomService, type Room, type RoomFilter } from "@/lib/room-service"
-import { toast } from "@/hooks/use-toast"
+import { toast } from "@/components/ui/use-toast"
 
 export default function RoomsPage() {
   const router = useRouter()

@@ -177,7 +177,7 @@ export default function NotificationsPage() {
           ) : notifications.length === 0 ? (
             <div className="text-center p-4">
               <Bell className="mx-auto h-12 w-12 text-muted-foreground opacity-50" />
-              <p className="mt-2 text-muted-foreground">Vous n&#39;avez aucune notification</p>
+              <p className="mt-2 text-muted-foreground">Vous n'avez aucune notification</p>
             </div>
           ) : (
             <div className="space-y-4">

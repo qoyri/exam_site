@@ -12,6 +12,11 @@ export interface Settings {
   updatedAt: string
 }
 
+export interface ProfileImage {
+  userId: number
+  profileImage: string
+}
+
 export interface UpdateSettingsDto {
   nickname?: string
   profileImage?: string
@@ -19,6 +24,9 @@ export interface UpdateSettingsDto {
   language?: string
   notificationsEnabled?: boolean
 }
+
+// Cache pour les images de profil
+const profileImageCache: Map<number, string> = new Map()
 
 export const settingsService = {
   async getSettings(): Promise<Settings> {
@@ -38,6 +46,27 @@ export const settingsService = {
     } catch (error) {
       console.error("Erreur lors de la mise à jour des paramètres:", error)
       throw error
+    }
+  },
+
+  async getProfileImage(userId: number): Promise<string> {
+    try {
+      // Vérifier si l'image est déjà en cache
+      if (profileImageCache.has(userId)) {
+        return profileImageCache.get(userId) || ""
+      }
+
+      // Sinon, récupérer l'image depuis l'API
+      const response = await apiClient.get(`/api/teacher/settings/profile-image/${userId}`)
+      const profileImage = response.data.profileImage || ""
+
+      // Mettre en cache l'image
+      profileImageCache.set(userId, profileImage)
+
+      return profileImage
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de l'image de profil pour l'utilisateur ${userId}:`, error)
+      return "" // Retourner une chaîne vide en cas d'erreur
     }
   },
 
@@ -100,5 +129,15 @@ export const settingsService = {
         reject(new Error("Erreur lors du chargement de l'image"))
       }
     })
+  },
+
+  // Vider le cache des images de profil
+  clearProfileImageCache() {
+    profileImageCache.clear()
+  },
+
+  // Supprimer une image spécifique du cache
+  removeProfileImageFromCache(userId: number) {
+    profileImageCache.delete(userId)
   },
 }
